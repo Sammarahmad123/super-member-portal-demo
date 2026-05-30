@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Make a Contribution — REST Super Member Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="brand brand-header">
+        <span class="brand-mark">REST</span>
+        <span class="brand-sub">Super Member Portal</span>
+      </a>
+      <div class="header-right">
+        <span class="member-greeting">Sarah Chen</span>
+        <a href="index.html" id="logout-link" data-testid="logout-link" class="logout-link">Log out</a>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="contribution.html" class="nav-link active">Make a Contribution</a>
+        <a href="transactions.html" class="nav-link">Transaction History</a>
+        <a href="member-details.html" class="nav-link">Update Member Details</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-inner narrow">
+      <h1 class="page-title">Make a Contribution</h1>
+      <p class="page-subtitle">Add to your super with a one-off contribution.</p>
+
+      <section class="card">
+        <form id="contribution-form" class="form" novalidate>
+          <div class="form-row">
+            <label for="contribution-amount">Contribution amount (AUD)</label>
+            <input
+              type="number"
+              id="contribution-amount"
+              name="contribution-amount"
+              data-testid="contribution-amount"
+              min="1"
+              step="0.01"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="contribution-type">Contribution type</label>
+            <select
+              id="contribution-type"
+              name="contribution-type"
+              data-testid="contribution-type-select"
+              required
+            >
+              <option value="before-tax">Before Tax</option>
+              <option value="after-tax">After Tax</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="payment-method">Payment method</label>
+            <select
+              id="payment-method"
+              name="payment-method"
+              data-testid="payment-method-select"
+              required
+            >
+              <option value="bank-transfer">Bank Transfer</option>
+              <option value="bpay">BPAY</option>
+              <option value="credit-card">Credit Card</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            id="submit-contribution-btn"
+            class="btn btn-primary"
+            data-testid="submit-contribution-btn"
+          >
+            Submit Contribution
+          </button>
+
+          <div
+            id="contribution-success"
+            class="form-success"
+            role="status"
+            hidden
+          >
+            Your contribution has been submitted successfully.
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('contribution-form');
+      var success = document.getElementById('contribution-success');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        success.hidden = false;
+      });
+    })();
+  </script>
+</body>
+</html>
