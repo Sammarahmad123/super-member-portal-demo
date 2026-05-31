@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REST Super Member Portal — Sign In</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="login-page">
+  <main class="login-container">
+    <div class="login-card">
+      <div class="brand">
+        <span class="brand-mark">REST</span>
+        <span class="brand-sub">Super Member Portal</span>
+      </div>
+      <h1 class="login-title">Sign in to your account</h1>
+      <p class="login-subtitle">Access your superannuation dashboard</p>
+
+      <form id="login-form" class="form" novalidate>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            data-testid="email-input"
+            autocomplete="username"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            data-testid="password-input"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <div
+          id="login-error"
+          class="form-error"
+          data-testid="login-error"
+          role="alert"
+          hidden
+        >
+          Invalid email or password. Please try again.
+        </div>
+
+        <button
+          type="submit"
+          id="login-btn"
+          class="btn btn-primary btn-block"
+          data-testid="login-btn"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <p class="login-footer-note">
+        Demo POC — credentials available in README.
+      </p>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
