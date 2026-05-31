@@ -31,7 +31,7 @@ jobs:
       - name: Trigger test repo on opened/synchronize
         if: github.event.action != 'closed'
         env:
-          GH_TOKEN: ${{ secrets.TEST_REPO_DISPATCH_TOKEN }}
+          GH_TOKEN: ${{ secrets.TEST_REPO_PAT }}
         run: |
           if [ -z "$GH_TOKEN" ]; then
             echo "::warning::TEST_REPO_DISPATCH_TOKEN secret is not set — skipping test dispatch."
