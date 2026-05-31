@@ -259,6 +259,15 @@ a:hover { text-decoration: underline; }
   border-radius: var(--radius);
   font-size: 0.9rem;
 }
+.success-details {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+.success-details li {
+  margin: 0.15rem 0;
+}
 
 /* --- Table --- */
 .data-table {
