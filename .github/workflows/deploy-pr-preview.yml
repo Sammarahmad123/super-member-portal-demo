@@ -43,6 +43,6 @@ jobs:
           gh api repos/Sammarahmad123/memberPortalAutomation/dispatches \
             --method POST \
             -f event_type="pr-preview-ready" \
-            -f client_payload[base_url]="$PREVIEW_URL" \
+            -f client_payload[app_url]="$PREVIEW_URL" \
             -f client_payload[pr_number]="${{ github.event.pull_request.number }}" \
             -f client_payload[sut_sha]="${{ github.event.pull_request.head.sha }}"
