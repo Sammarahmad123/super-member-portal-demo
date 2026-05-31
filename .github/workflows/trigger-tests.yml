@@ -1,13 +1,10 @@
-# Waits for GitHub Pages ("pages-build-deployment") to finish before
-# dispatching tests.  This guarantees the automation repo always runs
-# against the freshly-deployed app, never a stale or mid-deploy version.
+# Triggers the automation repo to run Playwright tests whenever a PR
+# targeting main is opened or updated. Also runnable manually from the
+# Actions tab.
 name: Trigger Playwright Tests
 
 on:
-  # Fire only after the built-in GitHub Pages deployment workflow completes.
-  workflow_run:
-    workflows: ["pages-build-deployment"]
-    types: [completed]
+  pull_request:
     branches: [main]
 
   # Also allow a manual kick-off from the Actions tab.
@@ -17,13 +14,6 @@ jobs:
   trigger-automation:
     name: Dispatch test run to memberPortalAutomation
     runs-on: ubuntu-latest
-
-    # For workflow_run: skip if the Pages deployment failed or was cancelled.
-    # workflow_dispatch has no workflow_run context, so the condition is skipped
-    # and the job always runs when triggered manually.
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Dispatch app-updated event to automation repo
