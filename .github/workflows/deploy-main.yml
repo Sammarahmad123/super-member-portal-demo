@@ -19,11 +19,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Copy only the deployable app files into a clean _site folder.
+      # Avoids publishing .git / .github / README into gh-pages, which
+      # caused peaceiris to corrupt its own git metadata (fatal: not a
+      # git repository) when publish_dir was set to repo root.
+      - name: Prepare deploy directory
+        run: |
+          mkdir _site
+          cp index.html dashboard.html contribute.html transactions.html member-details.html styles.css app.js _site/
+
       - name: Deploy to gh-pages root
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./_site
           publish_branch: gh-pages
           keep_files: true
-          exclude_assets: '.github,maintenance,node_modules,.git,.gitignore,README.md'
