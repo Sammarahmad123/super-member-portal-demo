@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Make a Contribution — REST Super Member Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="brand brand-header">
+        <span class="brand-mark">REST</span>
+        <span class="brand-sub">Super Member Portal</span>
+      </a>
+      <div class="header-right">
+        <span class="member-greeting">Sarah Chen</span>
+        <a href="index.html" id="logout-link" data-testid="logout-link" class="logout-link">Log out</a>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="contribute.html" class="nav-link active">Make a Contribution</a>
+        <a href="transactions.html" class="nav-link">Transaction History</a>
+        <a href="member-details.html" class="nav-link">Update Member Details</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-inner narrow">
+      <h1 class="page-title">Make a Contribution</h1>
+      <p class="page-subtitle">Add to your super with a one-off contribution.</p>
+
+      <section class="card">
+        <form id="contribution-form" class="form" novalidate>
+          <div class="form-row">
+            <label for="contribution-amount">Contribution amount (AUD)</label>
+            <input
+              type="number"
+              id="contribution-amount"
+              name="contribution-amount"
+              data-testid="contribution-amount"
+              min="1"
+              step="0.01"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="contribution-type">Contribution type</label>
+            <select
+              id="contribution-type"
+              name="contribution-type"
+              data-testid="contribution-type-select"
+              required
+            >
+              <option value="concessional">Concessional</option>
+              <option value="after-tax">After Tax</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="payment-method">Payment method</label>
+            <select
+              id="payment-method"
+              name="payment-method"
+              data-testid="payment-method-select"
+              required
+            >
+              <option value="bank-transfer">Bank Transfer</option>
+              <option value="bpay">BPAY</option>
+              <option value="credit-card">Credit Card</option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="btn btn-primary"
+            data-testid="submit-btn"
+          >
+            Submit Contribution
+          </button>
+
+          <div
+            id="contribution-success"
+            class="form-success"
+            role="status"
+            hidden
+          >
+            <div data-testid="success-headline">Contribution submitted successfully.</div>
+            <ul class="success-details">
+              <li><strong>Amount:</strong> <span id="success-amount" data-testid="success-amount"></span></li>
+              <li><strong>Contribution type:</strong> <span id="success-type" data-testid="success-type"></span></li>
+              <li><strong>Payment method:</strong> <span id="success-method" data-testid="success-method"></span></li>
+            </ul>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('contribution-form');
+      var success = document.getElementById('contribution-success');
+      var amountInput = document.getElementById('contribution-amount');
+      var typeSelect = document.getElementById('contribution-type');
+      var paymentSelect = document.getElementById('payment-method');
+      var amountOut = document.getElementById('success-amount');
+      var typeOut = document.getElementById('success-type');
+      var methodOut = document.getElementById('success-method');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var amount = parseFloat(amountInput.value || '0');
+        if (isNaN(amount)) amount = 0;
+        amountOut.textContent = '$' + amount.toLocaleString('en-AU', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+        typeOut.textContent = typeSelect.options[typeSelect.selectedIndex].text;
+        methodOut.textContent = paymentSelect.options[paymentSelect.selectedIndex].text;
+        success.hidden = false;
+      });
+    })();
+  </script>
+</body>
+</html>
