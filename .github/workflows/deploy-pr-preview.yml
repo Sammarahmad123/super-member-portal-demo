@@ -1,0 +1,48 @@
+name: Deploy PR preview
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: pr-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy PR preview
+        id: preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: .
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
+
+      - name: Trigger test repo on opened/synchronize
+        if: github.event.action != 'closed'
+        env:
+          GH_TOKEN: ${{ secrets.TEST_REPO_PAT }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::TEST_REPO_DISPATCH_TOKEN secret is not set — skipping test dispatch."
+            echo "Add it at: Settings → Secrets and variables → Actions → New repository secret"
+            exit 0
+          fi
+          PREVIEW_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.pull_request.number }}/"
+          echo "Preview URL: $PREVIEW_URL"
+          gh api repos/Sammarahmad123/memberPortalAutomation/dispatches \
+            --method POST \
+            -f event_type="pr-preview-ready" \
+            -f client_payload[base_url]="$PREVIEW_URL" \
+            -f client_payload[pr_number]="${{ github.event.pull_request.number }}" \
+            -f client_payload[sut_sha]="${{ github.event.pull_request.head.sha }}"
