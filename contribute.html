@@ -91,7 +91,12 @@
             role="status"
             hidden
           >
-            Your contribution has been submitted successfully.
+            <div data-testid="success-headline">Your contribution has been submitted successfully.</div>
+            <ul class="success-details">
+              <li><strong>Amount:</strong> <span id="success-amount" data-testid="success-amount"></span></li>
+              <li><strong>Contribution type:</strong> <span id="success-type" data-testid="success-type"></span></li>
+              <li><strong>Payment method:</strong> <span id="success-method" data-testid="success-method"></span></li>
+            </ul>
           </div>
         </form>
       </section>
@@ -102,9 +107,23 @@
     (function () {
       var form = document.getElementById('contribution-form');
       var success = document.getElementById('contribution-success');
+      var amountInput = document.getElementById('contribution-amount');
+      var typeSelect = document.getElementById('contribution-type');
+      var paymentSelect = document.getElementById('payment-method');
+      var amountOut = document.getElementById('success-amount');
+      var typeOut = document.getElementById('success-type');
+      var methodOut = document.getElementById('success-method');
       if (!form) return;
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        var amount = parseFloat(amountInput.value || '0');
+        if (isNaN(amount)) amount = 0;
+        amountOut.textContent = '$' + amount.toLocaleString('en-AU', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+        typeOut.textContent = typeSelect.options[typeSelect.selectedIndex].text;
+        methodOut.textContent = paymentSelect.options[paymentSelect.selectedIndex].text;
         success.hidden = false;
       });
     })();
