@@ -83,6 +83,27 @@
             />
           </div>
 
+          <div class="form-row">
+            <label for="new-phone">New phone number</label>
+            <input
+              type="tel"
+              id="new-phone"
+              name="new-phone"
+              data-testid="phone-input"
+              placeholder="e.g. +61 400 000 000"
+            />
+          </div>
+
+          <div
+            id="phone-error"
+            class="form-error"
+            role="alert"
+            data-testid="phone-error"
+            hidden
+          >
+            Phone number is required.
+          </div>
+
           <button
             type="submit"
             id="save-btn"
@@ -109,9 +130,17 @@
     (function () {
       var form = document.getElementById('member-details-form');
       var success = document.getElementById('member-details-success');
+      var phoneInput = document.getElementById('new-phone');
+      var phoneError = document.getElementById('phone-error');
       if (!form) return;
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        if (!phoneInput.value.trim()) {
+          phoneError.hidden = false;
+          success.hidden = true;
+          return;
+        }
+        phoneError.hidden = true;
         success.hidden = false;
       });
     })();
