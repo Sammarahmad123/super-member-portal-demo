@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Member Details — REST Super Member Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="brand brand-header">
+        <span class="brand-mark">REST</span>
+        <span class="brand-sub">Super Member Portal</span>
+      </a>
+      <div class="header-right">
+        <span class="member-greeting">Sarah Chen</span>
+        <a href="index.html" id="logout-link" data-testid="logout-link" class="logout-link">Log out</a>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="contribute.html" class="nav-link">Make a Contribution</a>
+        <a href="transactions.html" class="nav-link">Transaction History</a>
+        <a href="member-details.html" class="nav-link active">Update Member Details</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-inner narrow">
+      <h1 class="page-title">Update Member Details</h1>
+      <p class="page-subtitle">Keep your contact information current.</p>
+
+      <section class="card">
+        <form id="member-details-form" class="form" novalidate>
+          <div class="form-row">
+            <label for="member-name">Full name</label>
+            <input
+              type="text"
+              id="member-name"
+              name="member-name"
+              data-testid="member-name-input"
+              value="Sarah Chen"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="member-email">Email</label>
+            <input
+              type="email"
+              id="member-email"
+              name="member-email"
+              data-testid="member-email-input"
+              value="sarah.chen@restsuper.com.au"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="member-phone">Phone</label>
+            <input
+              type="tel"
+              id="member-phone"
+              name="member-phone"
+              data-testid="member-phone-input"
+              value="+61 400 123 456"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="member-address">Address</label>
+            <input
+              type="text"
+              id="member-address"
+              name="member-address"
+              data-testid="member-address-input"
+              value="123 George St, Sydney NSW 2000"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            id="save-btn"
+            class="btn btn-primary"
+            data-testid="save-btn"
+          >
+            Save
+          </button>
+
+          <div
+            id="member-details-success"
+            class="form-success"
+            role="status"
+            hidden
+          >
+            Your details have been updated.
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('member-details-form');
+      var success = document.getElementById('member-details-success');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        success.hidden = false;
+      });
+    })();
+  </script>
+</body>
+</html>
