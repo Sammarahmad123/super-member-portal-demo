@@ -92,7 +92,7 @@
             data-testid="cap-error"
             hidden
           >
-            Amount exceeds the annual concessional cap of $27,500.
+            Amount exceeds the annual concessional cap of $28,000.
           </div>
 
           <div
@@ -130,7 +130,7 @@
         var amount = parseFloat(amountInput.value || '0');
         if (isNaN(amount)) amount = 0;
         var isConcessional = typeSelect.value === 'concessional';
-        var CONCESSIONAL_CAP = 27500;
+        var CONCESSIONAL_CAP = 28000;
 
         // Show cap error and hide success if limit exceeded
         if (isConcessional && amount > CONCESSIONAL_CAP) {
