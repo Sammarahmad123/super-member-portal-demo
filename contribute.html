@@ -86,6 +86,16 @@
           </button>
 
           <div
+            id="cap-error"
+            class="form-error"
+            role="alert"
+            data-testid="cap-error"
+            hidden
+          >
+            Amount exceeds the annual concessional cap of $27,500.
+          </div>
+
+          <div
             id="contribution-success"
             class="form-success"
             role="status"
@@ -107,6 +117,7 @@
     (function () {
       var form = document.getElementById('contribution-form');
       var success = document.getElementById('contribution-success');
+      var capError = document.getElementById('cap-error');
       var amountInput = document.getElementById('contribution-amount');
       var typeSelect = document.getElementById('contribution-type');
       var paymentSelect = document.getElementById('payment-method');
@@ -118,6 +129,18 @@
         e.preventDefault();
         var amount = parseFloat(amountInput.value || '0');
         if (isNaN(amount)) amount = 0;
+        var isConcessional = typeSelect.value === 'concessional';
+        var CONCESSIONAL_CAP = 27500;
+
+        // Show cap error and hide success if limit exceeded
+        if (isConcessional && amount > CONCESSIONAL_CAP) {
+          capError.hidden = false;
+          success.hidden = true;
+          return;
+        }
+
+        // Otherwise hide error and show success
+        capError.hidden = true;
         amountOut.textContent = '$' + amount.toLocaleString('en-AU', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
